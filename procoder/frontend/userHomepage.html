@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ProCoder</title>
+    <link rel="icon" type="image/png" href="static/Logo3.jpg">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+
+
+    <!--连接Css-->
+    <link rel="stylesheet" href="static/ProCoder.css" />
+    <link rel="stylesheet" href="static/w3.css" />
+    <script type="text/javascript" src="static/jquery-3.6.1.js"></script>
+
+
+    <!--连接js-->
+    <script src="static/echarts.js"></script>
+    <script src="static/achievement.js"></script>
+    <script src="static/ProCoder.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script src="static/jquery-3.6.1.js"></script>
+</head>
+
+
+<body onload="loginHome()">
+<!-- loading animation start-->
+<div id="loading">
+    <section class='loader'>
+        <div class='loader-center'>
+            <div class='chars'>
+                <span class='char brace'>{</span>
+                <span class='dots'>
+                    <span class='char dot _dot-1'>.</span>
+                    <span class='char dot _dot-2'>.</span>
+                    <span class='char dot _dot-3'>.</span>
+                </span>
+                <span class='char brace'>}</span>
+            </div>
+            <img class="bi me-2" width="80" height="80" src="static/Logo3.jpg">
+        </div>
+    </section>
+</div>
+<!-- loading animation end-->
+
+<!--navigation bar start-->
+<div class="container-fluid sticky-top bg-white" id="nav_without_login" style="display: block">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item puff-in-center"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item puff-in-center"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item puff-in-center"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item puff-in-center"><a href="discuss.html" class="nav-link">Community</a></li>
+        </ul>
+    </header>
+</div>
+<div class="container-fluid sticky-top bg-white" id="nav_with_login" style="display: none">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a  class="nav-link"><span id="userPhoto"></span><span class="nav-item" id="LoginUsername"></span></a>
+                    <div class="dropdown-menu" style="min-width: unset">
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" href="userHomepage.html">Profile</a>
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" onclick="LogOut()">LogOut</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--navigation bar end-->
+
+<!--notices start-->
+<div id="changeSuccess" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #F1F8E9">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        You've changed your profile photo successfully!
+    </div>
+</div>
+<div id="changeDescriptionSuccess" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #F1F8E9">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        You've changed your description successfully!
+    </div>
+</div>
+<div id="emptyComment" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Empty description.
+    </div>
+</div>
+<!-- notices end-->
+
+<!-- Edit profile photo start -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Profile Photo:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0" >
+                            <button type="button" class="btn btn-light"><img src="Photo/1.png" alt="Photo1" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 1"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/2.png" alt="Photo2" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 2"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/3.png" alt="Photo3" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 3"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/4.png" alt="Photo4" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 4"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/5.png" alt="Photo5" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 5"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/6.png" alt="Photo6" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 6"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/7.png" alt="Photo7" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 7"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/8.png" alt="Photo8" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 8"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/9.png" alt="Photo9" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 9"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/10.png" alt="Photo10" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 10"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/11.png" alt="Photo11" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 11"></button>
+                        </div>
+                        <div class="col-lg-2 col-4 mb-3 me-lg-4 me-0">
+                            <button type="button" class="btn btn-light"><img src="Photo/12.png" alt="Photo12" class="rounded-circle" width="100" height="100" onclick="tempPhoto = 12"></button>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="ChangePhoto()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit profile photo end -->
+
+<!-- Edit user info start -->
+<div class="modal fade" id="userInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+                <h5 class="modal-title" id="userInfoModalLabel">Edit User Information:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="description" class="form-label mb-3">
+                    <strong>Description: </strong>
+                </label>
+                <textarea class="form-control" id="description"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="ChangeDescription()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit user info end-->
+
+<section>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center" style="height:450px">
+                        <div class="mt-4 mt-3" id="photo"></div>
+                        <p class="text-muted mb-2 mt-3">Click here to choose your character</p>
+                        <button class="btn-hover color-8 mt-3" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit</button>
+                        <br />
+                        <h1 class="my-3 Pro" id="Username"></h1>
+                        <h6 class="my-3 Code" id="point"></h6>
+                        <br />
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body p-0;control-label ms-2">
+                        <h2 class="text-center Pro mt-4 mb-4">User Info</h2>
+                        <br />
+                        <label>
+                            <p class="Code" >Email address:</p> <span class="Pro ms-1" id="UserEmail">testUser000@gmail.com</span>
+                        </label>
+                        <br />
+                        <br />
+
+                        <label>
+                            <span class="Code mb-3">Description:</span>
+                            <div class="ms-1" id="userInfo"></div>
+                            <br>
+                            <button class="btn-hover color-9" type="button" data-bs-toggle="modal" data-bs-target="#userInfoModal">Edit</button>
+                        </label>
+                        <br />
+                        <br />
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <br />
+                        <div class="row">
+                            <h2 class="text-center Pro">
+                                Achievements
+                            </h2>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class = "container" id="UserAchievement" style="justify-content: center">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h3 class="mb-9 Pro">
+                                    Recent Submissions
+                                </h3>
+                                <div id="AnsweredQuestion"> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col card">
+                        <h2 class="text-center Pro" id="weekly">Weekly Data</h2>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="switch" >
+                                <label class="switch__wrapper">
+                                    <input id="mode" type="checkbox"/>
+                                    <span class="switch__slider"></span>
+                                    <div></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mt-3" id="area-chart" style= "height:400px"></div>
+                        <div id="pie-chart" style=" height: 400px; "></div>
+                    </div>
+                </div>
+                <div id="aa" style="height: 30px" class="">
+
+                </div>
+<!--                <script src="ace/src/ace.js" type="text/javascript" charset="utf-8"></script>-->
+<!--                <script src="ace/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>-->
+<!--                <script>-->
+<!--                    let editor = ace.editor("aa")-->
+<!--                    editor.setTheme("ace/theme/github")-->
+<!--                    editor.session.setMode(`ace/mode/python`)-->
+<!--                    editor.setOption({-->
+<!--                        autoScrollEditorIntoView: true,-->
+<!--                        copyWithEmptySelection: true,-->
+<!--                    })-->
+<!--                    editor.setOption("mergeUndoDeltas","always");-->
+<!--                    editor.insert(`print("hello World")`)-->
+<!--                </script>-->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+<script>
+    //loading animation
+    document.onreadystatechange = function(){
+        if(document.readyState == "complete"){
+            $("#loading").fadeOut(3000);
+            $('#page').fadeIn();
+        }
+    };
+
+    $(function () {
+        dropdownOpen();
+
+    });
+
+    function dropdownOpen(){
+        $('.dropdown').mouseover(function(){
+            $(this).addClass('show');
+            $(this).find(".dropdown-menu").addClass('show');
+
+        }).mouseout(function(){
+            $(this).find(".dropdown-menu").removeClass('show');
+            $(this).removeClass('show');
+        });
+    }
+    function LogOut(){
+        if (localStorage.getItem("username") != null && localStorage.getItem("password") != null){
+            document.getElementById("nav_without_login").style.display = "block";
+            document.getElementById("nav_with_login").style.display = "none";
+            localStorage.removeItem('username')
+            localStorage.removeItem('password')
+            window.location.href = "home.html"
+        }
+    }
+
+    function GetDateStr(AddDayCount) {
+        var dd = new Date();
+        dd.setDate(dd.getDate()+AddDayCount);
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;
+        if(String(m).length === 1){
+            m = "0"+m
+        }
+        var d = dd.getDate();
+        if(String(d).length === 1){
+            d = "0"+d
+        }
+        return y+"-"+m+"-"+d;
+    }
+
+    function draw_areachart(date, post_data, practice_data) {
+        var chartDom = document.getElementById('area-chart');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            color: ['#80FFA5', '#00DDFF'],
+            title: {
+                text: 'LINE'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['practice', 'post']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: date
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: 'practice',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(128, 255, 165)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(1, 191, 236)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: practice_data
+                },
+                {
+                    name: 'post',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(0, 221, 255)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(77, 119, 255)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: post_data
+                },
+            ]
+        };
+
+        option && myChart.setOption(option);
+    }
+
+
+
+    function pie_chart(practice, post) {
+        var pie = echarts.init(document.getElementById('pie-chart'));
+        var option_pie;
+
+        option_pie = {
+            title: {
+                text: 'OVERALL',
+                subtext: '',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left'
+            },
+            series: [
+                {
+                    name: 'Access From',
+                    type: 'pie',
+                    radius: '50%',
+                    data: [
+                        { value: practice, name: 'PRACTICE' },
+                        { value: post, name: 'POST' },
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        option_pie && pie.setOption(option_pie);
+    }
+
+
+
+
+    let count = 10
+
+    var d = []
+    var line_date = []
+    var practice_data = []
+    var post_data = []
+
+    for (let i=0; i<count; i++){
+        d.push({x: GetDateStr(-i), post: 0, solution: 0, comment: 0})
+        line_date.push(GetDateStr(-i))
+        post_data.push(0)
+        practice_data.push(0)
+    }
+
+    var base64encodedData = btoa(localStorage.getItem("username") + ":" + localStorage.getItem("password"));
+    $.ajax({
+        url: "http://192.168.31.77:5050/solution/GetSolusByUser",
+        dataType: "json",
+        type: 'get',
+        headers: {
+            Accept: "application/json; charset=utf-8",
+            "Authorization": "Basic " + base64encodedData,
+        },
+        success: function (response) {
+            var po = 0
+            var pa = 0
+            for (let i=0; i<response.length; i++){
+                for (let j=0; j<count; j++){
+                    if(response[i].submitDate.slice(0,10) === d[j].x){
+                        d[j].solution += 1
+                        practice_data[j] += 1
+                        pa += 1
+                    }
+                }
+            }
+            $.ajax({
+                url: "http://192.168.31.77:5050/question/GetQuesByUser",
+                dataType: "json",
+                type: 'get',
+                headers: {
+                    Accept: "application/json; charset=utf-8",
+                    "Authorization": "Basic " + base64encodedData,
+                },
+                success: function (post) {
+
+                    for (let i=0; i<post.length; i++){
+                        for (let j=0; j<count; j++){
+                            if(post[i].postDate.slice(0,10) === d[j].x){
+                                d[j].post += 1
+                                post_data[j] += 1
+                                po += 1
+                            }
+                        }
+                    }
+                    draw_areachart(line_date,post_data,practice_data)
+                    pie_chart(pa,po)
+                    $("#pie-chart").css("display","none")
+
+
+                    $("#mode").click(function(){
+                        var box=document.getElementById("mode");
+                        if (box.checked === false){
+                            $("#area-chart").css('display','block');
+                            $("#pie-chart").css("display","none")
+
+                        }
+                        else {
+                            $("#area-chart").css("display","none")
+                            $("#pie-chart").css("display","block")
+
+                        }
+                    })
+
+                    // var data = d,
+                    //     config = {
+                    //         data: data,
+                    //         xkey: 'x',
+                    //         ykeys: [ 'solution','post'],
+                    //         labels: [ 'solution','post'],
+                    //         fillOpacity: 0.6,
+                    //         hideHover: 'auto',
+                    //         behaveLikeLine: true,
+                    //         resize: true,
+                    //         pointFillColors:['#ffffff'],
+                    //         pointStrokeColors: ['black'],
+                    //         lineColors:['blue','red']
+                    //     };
+                    // config.element = 'area-chart';
+                    // Morris.Area(config);
+                    // config.element = 'line-chart';
+                    // Morris.Line(config);
+                    // config.element = 'bar-chart';
+                    // Morris.Bar(config);
+                    // config.element = 'stacked';
+                    // config.stacked = true;
+                    // Morris.Bar(config);
+                    // Morris.Donut({
+                    //     element: 'pie-chart',
+                    //     data: [
+                    //         {label: "Friends", value: 30},
+                    //         {label: "Allies", value: 15},
+                    //         {label: "Enemies", value: 45},
+                    //         {label: "Neutral", value: 10}
+                    //     ]
+                    // });
+
+                },
+                error:function(){
+                    draw_areachart(line_date,practice_data)
+                    pie_chart(pa)
+                    $("#pie-chart").css("display","none")
+                    $("#mode").click(function(){
+                        var box=document.getElementById("mode");
+                        if (box.checked === false){
+                            $("#area-chart").css('display','block');
+                            $("#pie-chart").css("display","none")
+
+                        }
+                        else {
+                            $("#area-chart").css("display","none")
+                            $("#pie-chart").css("display","block")
+
+                        }
+                    })
+
+
+                }
+
+            })
+
+        },
+        error: function (){
+            draw_areachart(line_date,post_data)
+            pie_chart(po)
+            $("#pie-chart").css("display","none")
+            $("#mode").click(function(){
+                var box=document.getElementById("mode");
+                if (box.checked === false){
+                    $("#area-chart").css('display','block');
+                    $("#pie-chart").css("display","none")
+
+                }
+                else {
+                    $("#area-chart").css("display","none")
+                    $("#pie-chart").css("display","block")
+
+                }
+            })
+
+        }
+    })
+
+
+
+</script>
+
+
+<footer class="w3-bottom w3-center">
+    <b>ProCoder</b> by Team 9
+</footer>
+
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ProCoder</title>
+    <link rel="icon" type="image/png" href="static/Logo3.jpg">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+
+
+    <!--连接Css-->
+    <link rel="stylesheet" href="static/ProCoder.css" />
+    <link rel="stylesheet" href="static/w3.css" />
+
+
+    <!--连接js-->
+    <script src="static/ProCoder.js"></script>
+    <script src="static/post.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!--连接ace-->
+    <script src="ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ace/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+
+<body onload="login()">
+
+<!-- loading animation start-->
+<div id="loading">
+    <section class='loader'>
+        <div class='loader-center'>
+            <div class='chars'>
+                <span class='char brace'>{</span>
+                <span class='dots'>
+                            <span class='char dot _dot-1'>.</span>
+                            <span class='char dot _dot-2'>.</span>
+                            <span class='char dot _dot-3'>.</span>
+                        </span>
+                <span class='char brace'>}</span>
+            </div>
+            <img class="bi me-2" width="80" height="80" src="static/Logo3.jpg">
+        </div>
+    </section>
+</div>
+<!-- loading animation end-->
+
+<!--notices start-->
+<div id="noLanguage" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please select a language before posting questions!
+    </div>
+</div>
+<div id="noDifficulty" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please select a difficulty level before posting questions!
+    </div>
+</div>
+<div id="noTitle" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please enter a question title before posting questions!
+    </div>
+</div>
+<div id="noFunctionName" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please enter a function name before posting questions!
+    </div>
+</div>
+<div id="noDescription" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please enter a question description before posting questions!
+    </div>
+</div>
+<div id="noSolution" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please enter a sample solution before posting questions!
+    </div>
+</div>
+<div id="noTestCases" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please enter at least two test cases and corresponding outcomes before posting questions!
+    </div>
+</div>
+<div id="noParingTestCases" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please enter test cases and corresponding outcomes before posting questions!
+    </div>
+</div>
+
+<div id="PostRequireLogin" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please Login before posting any questions!
+    </div>
+</div>
+
+<div id="postSuccess" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #F1F8E9">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close" onclick="window.location.reload()"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Congratulation! You've posted your question successfully!
+    </div>
+</div>
+<!-- notices end-->
+
+<!--navigation bar start-->
+<div class="container-fluid sticky-top bg-white" id="nav_without_login" style="display: block">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item puff-in-center"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item puff-in-center"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item puff-in-center"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item puff-in-center"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item ms-3">
+                <button class="btn-hover color-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Login
+                </button>
+            </li>
+        </ul>
+    </header>
+    <div class="row justify-content-end position-absolute top-100 end-0">
+        <div class="collapse" id="collapseExample">
+
+            <!--SignIn-->
+            <div class="card text-center mt-3" id="signin">
+                <div class="card-body">
+                    <form id="signInForm">
+                        <div class="mb-3">
+                            <label for="SignInUsername_input" class="form-label float-start">
+                                <strong>Username</strong>
+                            </label>
+                            <input type="text" class="form-control" id="SignInUsername_input">
+                        </div>
+                        <div class="mb-3">
+                            <label for="SignInPassword_input" class="form-label float-start">
+                                <strong>Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="SignInPassword_input">
+                        </div>
+                        <div id="LoginHelp" class="form-text"></div>
+
+                        <input type="button" class="btn btn-outline-success" value="Login" onclick="signIn()"></input>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Do not have an account? <a href="#" id="signin_link" onclick="close_sign_in()">sign up</a>
+                </div>
+            </div>
+
+
+            <!--SignUp-->
+            <div class="card text-center mt-3" id="signup" style="display: none">
+                <div class="card-body">
+                    <form id="signUpForm">
+                        <div class="mb-3">
+                            <label for="username_input" class="form-label float-start">
+                                <strong>Username</strong>
+                            </label>
+                            <input type="text" class="form-control" id="username_input">
+                            <div class="form-text " id="UsernameHelp"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_input" class="form-label float-start">
+                                <strong>Email address</strong>
+                            </label>
+                            <input type="email" class="form-control" id="email_input" aria-describedby="emailHelp">
+                            <div class="form-text " id="EmailHelp">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput1" class="form-label float-start">
+                                <strong>Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput1">
+                            <div class="form-text" id="passwordHelp">Please enter a password between 6 and 12 characters.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput2" class="form-label float-start">
+                                <strong>Confirm Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput2">
+                            <div class="form-text " id="confirmHelp"> </div>
+                        </div>
+                        <input type="button" class="btn btn-outline-success" onclick="signUp()" value="Sign Up">
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Having an account? <a href="#" onclick="close_sign_up()">sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid sticky-top bg-white" id="nav_with_login" style="display: none">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a  class="nav-link"><span id="userPhoto"></span><span class="nav-item"  id="LoginUsername"></span></a>
+                    <div class="dropdown-menu" style="min-width: unset">
+                        <a class="dropdown-item;text-muted" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" href="userHomepage.html">Profile</a>
+                        <a class="dropdown-item;text-muted" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" onclick="LogOut()">LogOut</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--navigation bar end-->
+
+<div class="container">
+    <div>
+        <h4 class="text-center font-weight-bold">
+            <span class="Pro">Create</span>
+            <span class="Code">Your Own</span>
+            <span class="r">Question!</span>
+        </h4>
+        <hr>
+    </div>
+</div>
+
+<div class="container" style="height: 80%">
+    <form>
+        <div class="row">
+            <!--left-->
+            <div class="col-12 col-lg-6 me-3 ms-4" id="left" onchange="preview()" onkeyup="preview()">
+                <div style="overflow-y: scroll; overflow-x: hidden; max-height: 70vh;">
+                    <div class="row">
+                        <div class="col">
+                            <strong>Language</strong><span style="color: red">*</span>
+                        </div>
+                        <div class="col ms-5 me-2">
+                            <select class="form-select" aria-label="Default select example" id="Language" onchange="setLanguage()">
+                                <option selected>Choose a Language</option>
+                                <option value="Python">Python</option>
+                                <option value="Java">Java</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <br><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <strong>Difficulty level </strong><span style="color: red">*</span>
+                        </div>
+                        <div class="col ms-5 me-2">
+                            <select class="form-select" aria-label="Default select example" id="Difficulty">
+                                <option selected>Choose a Difficulty Level</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <br><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <strong>Category </strong>
+                        </div>
+                        <div class="col ms-5 me-2">
+                            <select class="form-select" aria-label="Default select example" id="Category">
+                                <option selected>Choose a Category</option>
+                                <option value="Algorithm">Algorithm</option>
+                                <option value="Array">Array</option>
+                                <option value="Sorting">Sorting</option>
+                                <option value="Math">Math</option>
+                                <option value="Counting">Counting</option>
+                                <option value="Tree">Tree</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-5 me-2">
+                        <label for="questionTitle" class="form-label col">
+                            <strong>Question Title </strong><span style="color: red">*</span>
+                        </label>
+                        <input type="text" class="form-control col" id="questionTitle" placeholder="Title ..."> 
+                    </div>
+                    <div class="row mt-5 me-2">
+                        <label for="functionName" class="form-label col-3" style="width: auto">
+                            <strong>Function name</strong> <span style="color: red">*</span>
+                        </label>
+                        <input type="text" class="form-control col" id="functionName" placeholder="functionName(par1, par2...)">
+                    </div>
+                    <label for="description" class="form-label mt-5 mb-3 me-1">
+                        <strong>Question Description </strong><span style="color: red">*</span>
+                    </label>
+                    <div class="row ms-1 me-2 mt-3">
+                        <p style="font-size: 10px; color: darkgray">Hint: Please at least include the data type of input parameters and a description of the outcome.</p>
+                        <textarea class="form-control" id="Description" rows="5" placeholder="Description ..."></textarea>
+                    </div>
+                    <div class="row ms-1 me-2 mt-3">
+                        <label for="solution" class="form-label mt-5 mb-3">
+                            <strong>Sample Solution </strong><span style="color: red">*</span>
+                        </label>
+                        <p style="font-size: 10px; color: darkgray">Hint: Please choose a language before enter sample solution.</p>
+                        <div class="border rounded" id="solution"  style="height: 260px;"></div>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <h6>(Please enter at least two test cases)...</h6>
+                    </div>
+
+                    <div id="TestCases" onkeyup="preview()">
+                        <div class="row me-2 ms-1 mt-3" id="TestCase_1">
+                            <label id="TestCase_1_label" class="form-label mb-3 mt-3">
+                                <strong>Test Case1</strong><span style="color: red">*</span>
+                            </label>
+                            <div class="border rounded" id="testcase1"  style="height: 100px;"></div>
+                            <button class="btn btn-outline-primary col-2 mt-1" onmousedown="checkTestCase(1)" type="button">Check</button>
+                            <span class="col-10 mt-3" style="font-size: 10px; color: darkgray">Hint: Press check button to get the expected output.</span>
+
+                            <label id="expectedOutput1label" class="form-label mb-3 mt-3">
+                                <strong>Expected Output</strong>
+                            </label>
+                            <textarea class="form-control" id="expectedOutput1" rows="3" style="white-space: pre-line;" readonly></textarea>
+                            <br>
+                        </div>
+
+                        <div class="row me-2 ms-1 mt-3" id="TestCase_2">
+                            <hr class="border-dark">
+                            <label id="TestCase_2_label" class="form-label mb-3 mt-3">
+                                <strong>Test Case2</strong> <span style="color: red">*</span>
+                            </label>
+                            <div class="border rounded" id="testcase2"  style="height: 100px;"></div>
+                            <button class="btn btn-outline-primary col-2 mt-1" onmousedown="checkTestCase(2)" type="button">Check</button>
+                            <span class="col-10 mt-3" style="font-size: 10px; color: darkgray">Hint: Press check button to get the expected output.</span>
+
+                            <label id="expectedOutput2label" class="form-label mb-3 mt-3">
+                                <strong>Expected Output</strong>
+                            </label>
+                            <textarea class="form-control" id="expectedOutput2" rows="3" style="white-space: pre-line;" readonly></textarea>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 row justify-content-center" >
+
+                    </div>
+                </div>
+
+                <div class="mt-2 mb-0 row justify-content-end">
+                    <button style="width: auto; margin-right: 5px" type="button" id="addButton" class=" btn btn-success"onclick="AddNewCase()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                        </svg>
+                    </button>
+                    <input type="button" class="btn btn-outline-success col-2" value="Post" onclick="Posting();console.log(question)">
+                </div>
+            </div>
+            <!-- right-->
+            <div class="col ms-3 me-2 mb-3 bg-white" style="overflow-y: scroll; overflow-x: hidden; max-height: 70vh;" id="questionDes">
+                <h2 id="quesTitle">Question Title</h2>
+                <div class="container">
+                    <button type="button" class="btn btn-dark" id="difficulty_level">Difficulty</button>
+                    <button type="button" class="btn btn-dark" id="languageTag">Language</button>
+                    <button type="button" class="btn btn-dark" id="categoryTag" hidden></button>
+                </div>
+                <hr style="border: 1px solid; padding: 0 15%" />
+                <div class="row mb-1"><h4 style="margin: 0 3% ">Write a function named: <code class="bg-light rounded-3 example" style="margin: 0 3%; font-size: 16px" id="funcDes">functionName(parameter1, ...)</code></h4></div>
+                <h4 style="margin: 0 3% " id="quesDes">Question description</h4>
+                <br>
+                <h4 class='mb-2'>Sample solution</h4>
+                <div id="solution_example"><div class="bg-light rounded-3 example"><code>sample solution</code></div></div>
+                <br>
+                <div>
+                    <div id="testcase">
+                        <h4 class='mb-2'>Test Case 1</h4>
+                        <div class="bg-light rounded-3 example" id="ace0"><code>Test case 1</code></div><br>
+                        <h4 class='mb-2'>Expected Output 1 </h4>
+                        <div class="bg-light rounded-3 example">Expected Output 1</div><br>
+
+                        <h4 class='mb-2'>Test Case 2</h4>
+                        <div class="bg-light rounded-3 example" id="ace2"><code>Test case 2</code></div><br>
+                        <h4 class='mb-2'>Expected Output 2 </h4>
+                        <div class="bg-light rounded-3 example">Expected Output 2</div><br>
+                    </div>
+                    <br>
+                </div>
+
+
+                <br><br>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+<!-- Slider -->
+<br><br>
+<!-- end slider -->
+
+<!--code area-->
+<script src="https://cdn.staticfile.org/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
+<script>
+    function setLanguage(){
+        $("#solution").html("")
+        require.config({ paths: { 'vs': 'https://cdn.staticfile.org/monaco-editor/0.34.0/min/vs' }});
+        // 将monaco变量赋值为全局变量
+        require(['vs/editor/editor.main'], function() {
+            let value = ""
+            if (document.getElementById("Language").value === "Python"){
+                value = "def function():"
+                $("#solution_example").html('<div class="bg-light rounded-3 example"><code>sample solution</code></div>');
+            }
+            else if (document.getElementById("Language").value === "Java"){
+                value = "Java"
+                $("#solution_example").html('<div class="bg-light rounded-3 example"><code>sample solution</code></div>');
+            }
+            else if (document.getElementById("Language").value === "C"){
+                value = "#include <stdio.h>\n" +
+                    "int main() {\n" +
+                    "    printf(\"Hello World!\");\n" +
+                    "}"
+                $("#solution_example").html('<div class="bg-light rounded-3 example"><code>sample solution</code></div>');
+            }
+
+            var editor = window.monaco.editor.create(document.getElementById('solution'), {
+                value: value,
+                language: document.getElementById("Language").value.toLowerCase(),
+                lineNumbers: 'on',
+                roundedSelection: true,
+                scrollBeyondLastLine: false,
+                readOnly: false,
+                fixedOverflowWidgets: true,
+                // theme: 'vs-dark'
+            });
+            var testCaseEditor1 = window.monaco.editor.create(document.getElementById('testcase1'), {
+                value: "print(functionName(parameter1, parameter2))",
+                language: document.getElementById("Language").value.toLowerCase(),
+                lineNumbers: 'on',
+                roundedSelection: true,
+                scrollBeyondLastLine: false,
+                readOnly: false,
+                fixedOverflowWidgets: true,
+                // theme: 'vs-dark'
+            });
+
+            var testCaseEditor2 = window.monaco.editor.create(document.getElementById('testcase2'), {
+                value: "print(functionName(parameter1, parameter2))",
+                language: document.getElementById("Language").value.toLowerCase(),
+                lineNumbers: 'on',
+                roundedSelection: true,
+                scrollBeyondLastLine: false,
+                readOnly: false,
+                fixedOverflowWidgets: true,
+                // theme: 'vs-dark'
+            });
+            // setTimeout(function () {
+            //     editor.updateOptions({
+            //         lineNumbers: 'on'
+            //     });
+            // }, 1000);
+
+            // editor.onDidChangeModelContent((event) => {
+            //     const newValue=editor.getValue();
+            //     $("#solution_example").html("<code>" + newValue + "</code>");
+            // })
+        });
+    }
+</script>
+
+<script>
+    $(function () {
+        dropdownOpen();
+
+    });
+
+    function dropdownOpen(){
+        $('.dropdown').mouseover(function(){
+            $(this).addClass('show');
+            $(this).find(".dropdown-menu").addClass('show');
+
+        }).mouseout(function(){
+            $(this).find(".dropdown-menu").removeClass('show');
+            $(this).removeClass('show');
+        });
+    }
+    //loading animation
+    document.onreadystatechange = function(){
+        if(document.readyState == "complete"){
+            $("#loading").fadeOut(3000);
+        }
+    };
+    function LogOut(){
+        if (localStorage.getItem("username") != null && localStorage.getItem("password") != null){
+            document.getElementById("nav_without_login").style.display = "block";
+            document.getElementById("nav_with_login").style.display = "none";
+            localStorage.removeItem('username')
+            localStorage.removeItem('password')
+        }
+    }
+</script>
+
+</body>
+
+<footer class="w3-bottom w3-center">
+    <b>ProCoder</b> by Team 9
+</footer>
+</html>

@@ -1,0 +1,434 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ProCoder</title>
+    <link rel="icon" type="image/png" href="static/Logo3.jpg">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+
+
+
+    <!--连接Css-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="static/ProCoder.css" />
+    <link rel="stylesheet" href="static/w3.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!--连接js-->
+    <script type="text/javascript" src="static/jquery-3.6.1.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script defer src="static/ProCoder.js"></script>
+
+</head>
+
+
+<body onload="login();getRanking()">
+
+
+<!-- loading animation start-->
+<div id="loading">
+    <section class='loader'>
+        <div class='loader-center'>
+            <div class='chars'>
+                <span class='char brace'>{</span>
+                <span class='dots'>
+                        <span class='char dot _dot-1'>.</span>
+                        <span class='char dot _dot-2'>.</span>
+                        <span class='char dot _dot-3'>.</span>
+                    </span>
+                <span class='char brace'>}</span>
+            </div>
+            <img class="bi me-2" width="80" height="80" src="static/Logo3.jpg">
+        </div>
+    </section>
+</div>
+<!-- loading animation end-->
+
+<!--navigation bar start-->
+<div class="container-fluid sticky-top bg-white" id="nav_without_login" style="display: block">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item puff-in-center"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item puff-in-center"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item puff-in-center"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item puff-in-center"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item ms-3">
+                <button class="btn-hover color-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Login
+                </button>
+            </li>
+        </ul>
+    </header>
+    <div class="row justify-content position-absolute top-100 end-0">
+        <div class="collapse" id="collapseExample">
+
+            <!--SignIn-->
+            <div class="card text-center mt-3" id="signin">
+                <div class="card-body">
+                    <form id="signInForm">
+                        <div class="mb-3">
+                            <label for="SignInUsername_input" class="form-label float-start">
+                                <strong>Username</strong>
+                            </label>
+                            <input type="text" class="form-control" id="SignInUsername_input">
+                        </div>
+                        <div class="mb-3">
+                            <label for="SignInPassword_input" class="form-label float-start">
+                                <strong>Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="SignInPassword_input">
+                        </div>
+                        <div id="LoginHelp" class="form-text"></div>
+
+                        <input type="button" class="btn btn-outline-success" value="Login" onclick="signIn()"></input>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Do not have an account? <a href="#" id="signin_link" onclick="close_sign_in()">sign up</a>
+                </div>
+            </div>
+
+
+            <!--SignUp-->
+            <div class="card text-center mt-3" id="signup" style="display: none">
+                <div class="card-body">
+                    <form id="signUpForm">
+                        <div class="mb-3">
+                            <label for="username_input" class="form-label float-start">
+                                <strong>Username</strong>
+                            </label>
+                            <input type="text" class="form-control" id="username_input">
+                            <div class="form-text " id="UsernameHelp"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_input" class="form-label float-start">
+                                <strong>Email address</strong>
+                            </label>
+                            <input type="email" class="form-control" id="email_input" aria-describedby="emailHelp">
+                            <div class="form-text " id="EmailHelp">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput1" class="form-label float-start">
+                                <strong>Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput1">
+                            <div class="form-text" id="passwordHelp">Please enter a password between 6 and 12 characters.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput2" class="form-label float-start">
+                                <strong>Confirm Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput2">
+                            <div class="form-text " id="confirmHelp"> </div>
+                        </div>
+                        <input type="button" class="btn btn-outline-success" onclick="signUp()" value="Sign Up">
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Having an account? <a href="#" onclick="close_sign_up()">sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--navigation bar end-->
+
+<div class="container-fluid sticky-top bg-white" id="nav_with_login" style="display: none;">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#nav_with_login" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a  class="nav-link"><span id="userPhoto"></span><span class="nav-item"  id="LoginUsername"></span></a>
+
+                    <div class="dropdown-menu" style="min-width: unset">
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" href="userHomepage.html">Profile</a>
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" onclick="LogOut()">LogOut</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+
+<div class="container-fluid">
+    <div class="container-fluid animated fadeInDownBig blob">
+        <div class="intro_sentence">
+            <div class="intro_sentence2">
+                <span class="intro_sentence3">Get Started With ProCoder</span>
+            </div>
+            <img class="rounded mx-auto d-block" src="static/Logo1.jpg" alt="ProCoder" height="300">
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div>
+        <h1 class="text-center font-weight-bold">
+            <span class="Pro wow fadeInUp" data-wow-duration="1s">Check</span>
+            <span class="Code wow fadeInUp" data-wow-duration="2s">Our</span>
+            <span class="r wow fadeInUp" data-wow-duration="3s">ProCoders</span>
+        </h1>
+    </div>
+
+    <!-- Slider -->
+    <br>
+    <!-- end slider -->
+<!--    <table class="table table-borderless leaderBoard wow fadeInLeft" data-wow-duration="2s">-->
+
+    <table class="table table-borderless leaderBoard">
+        <thead class="thead-light">
+        <tr class="align-middle">
+            <th scope="col" style="width: 20%">
+                <span class="Pro">Pro</span>
+            </th>
+            <th scope="col">
+                <span class="Code" style="width: 25%">Coder</span>
+            </th>
+            <th scope="col" style="width: 10%">
+                <span class="r">Ranks</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody id="leaderBoard">
+        </tbody>
+    </table>
+</div>
+
+
+
+<br><br><br>
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-4  price-box price-box--purple mt-3 wow fadeInLeft" data-wow-delay="0.1s" style="visibility: visible; -webkit-animation-delay: 0.1s; -moz-animation-delay: 0.1s; animation-delay: 0.1s;">
+            <div class="price-box__wrap">
+                <img class="card-img-top" src="Photo/4.png" alt="Card image cap">
+                <h3 class="card-title" id="Pro">Want some challenge?</h3>
+                <p class="card-text">Other ProCoders posted some exercises to challenge you! Will you be able to pass their challenge?</p>
+                <div class="price-box__btn">
+                    <a href="practice.html" class="btn btn-outline-primary" id="explore">Explore</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-4  price-box price-box--purple mt-3 wow fadeInLeft" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+            <div class="price-box__wrap">
+                <img class="card-img-top" src="Photo/6.png" alt="Card image cap">
+                <h3 class="card-title" id="r">Express Your Opinion?</h3>
+                <p class="card-text">If you have anything you would like to ask or discuss with others, now's the perfect time and spot!</p>
+                <div class="price-box__btn">
+                    <a href="discuss.html" class="btn btn btn-outline-warning">Discuss</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4  price-box price-box--purple mt-3 wow fadeInLeft" data-wow-delay="0.3s" style="visibility: visible; -webkit-animation-delay: 0.3s; -moz-animation-delay: 0.3s; animation-delay: 0.3s;">
+            <div class="price-box__wrap">
+                <img class="card-img-top" src="Photo/5.png" alt="Card image cap">
+                <h3 class="card-title" id="Code">One Step Further?</h3>
+                <p class="card-text">If you want to become an actual Pro, try and create your own exercise to challenge other coders!</p>
+                <div class="price-box__btn">
+                    <a href="post.html" class="btn btn-outline-success">Post</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-4  price-box price-box--purple mt-5 wow fadeInDown">
+            <div class="price-box__wrap">
+                <img class="card-img-top" src="Photo/7.png" alt="Card image cap">
+                    <h3 class="card-title">View Your Achievements?</h3>
+                    <p class="card-text">If you want to check out what you have accomplished so far, feel free to check out your achievements!</p>
+                <div class="price-box__btn">
+                    <a class="btn btn-outline-info" onclick="Check()">UserAchievements</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<br><br>
+
+<div id="warning" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Please Login to check your profile
+    </div>
+</div>
+
+<!-- Slider -->
+<br><br>
+<!-- end slider -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 my-4 mx-auto">
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsve">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th class="w-25"></th>
+                                <td class="">
+                                    <a  class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+                                        <span class="fs-4 Pro">Pro</span>
+                                        <span class="fs-4 Code">Code</span>
+                                        <span class="fs-4 r">r</span>
+                                </a>
+                                </td>
+                                <td class="">CodeRunner</td>
+                                <td class="">HackerRank</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="wow fadeInLeft" data-wow-duration="2s">
+                                <td class="w-25 option">Code Compile/Run</td>
+                                <td> <i class="fa fa-check text-success"></i></td>
+                                <td> <i class="fa fa-check text-success"></i></td>
+                                <td> <i  class="fa fa-check text-success"></i></td>
+                            </tr>
+                            <tr class="wow fadeInLeft" data-wow-duration="2s">
+                                <td>Discuss/Comment</td>
+                                <td><i class="fa fa-check text-success"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+                                <td><i class="fa fa-check text-success "></i></td>
+
+                            </tr>
+                            <tr class="wow fadeInLeft" data-wow-duration="2s">
+                                <td>Post Questions</td>
+                                <td><i class="fa fa-check text-success"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+
+                            </tr>
+                            <tr class="wow fadeInLeft" data-wow-duration="2s">
+                                <td>UserAchievements</td>
+                                <td><i class="fa fa-check text-success"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+
+                            </tr>
+                            <tr class="wow fadeInLeft" data-wow-duration="2s">
+                                <td>Database</td>
+                                <td><i class="fa fa-check text-success"></i></td>
+                                <td><i class="fa fa-check text-success"></i></td>
+                                <td><i class="fa fa-check text-success"></i></td>
+
+                            </tr>
+                            <tr class="wow fadeInLeft" data-wow-duration="2s">
+                                <td>UserRanking System</td>
+                                <td><i class="fa fa-check text-success"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+                                <td><i class="fa fa-times text-danger"></i></td>
+
+                            </tr>
+
+
+                            </tbody>
+                            <tfoot class="thead-inverse">
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+<footer class="w3-bottom w3-center">
+    <!--    <span style="">-->
+    <!--        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#a2d9ff" fill-opacity="1" d="M0,128L40,128C80,128,160,128,240,154.7C320,181,400,235,480,245.3C560,256,640,224,720,202.7C800,181,880,171,960,181.3C1040,192,1120,224,1200,213.3C1280,203,1360,149,1400,122.7L1440,96L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path></svg>-->
+    <!--    </span>-->
+    <b>ProCoder</b> by Team 9
+</footer>
+
+<script>
+    $(function () {
+        dropdownOpen();
+
+    });
+
+    function dropdownOpen(){
+        $('.dropdown').mouseover(function(){
+            $(this).addClass('show');
+            $(this).find(".dropdown-menu").addClass('show');
+
+        }).mouseout(function(){
+            $(this).find(".dropdown-menu").removeClass('show');
+            $(this).removeClass('show');
+        });
+    }
+
+    document.onreadystatechange = function(){
+        if(document.readyState == "complete"){
+            $("#loading").fadeOut(3000);
+            $('#page').fadeIn();
+        }
+    };
+
+    function LogOut(){
+        if (localStorage.getItem("username") != null && localStorage.getItem("password") != null){
+            document.getElementById("nav_without_login").style.display = "block";
+            document.getElementById("nav_with_login").style.display = "none";
+            document.getElementById("SignInUsername_input").value = "";
+            document.getElementById("SignInPassword_input").value = "";
+
+            localStorage.removeItem('username')
+            localStorage.removeItem('password')
+        }
+    }
+    function Check(){
+        if(localStorage.getItem('username') != null && localStorage.getItem('password')!= null){
+            window.location.href = 'userHomepage.html';
+        }
+        else{
+            document.getElementById('warning').className = 'toast fade show';
+            document.getElementById('warning').setAttribute("class", 'toast fade show');
+            document.getElementById('warning').hidden = false;
+            $("#warning").show().delay(3000).fadeOut();
+            return;
+
+        }
+    }
+
+
+</script>
+
+</body>
+
+</html>

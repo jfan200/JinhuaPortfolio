@@ -1,0 +1,606 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <title>ProCoder</title>
+    <link href="static/Logo3.jpg" rel="icon" type="image/png">
+    <link href="static/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+
+    <!--连接Css-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.2/animate.min.css">
+    <link href="static/ProCoder.css" rel="stylesheet"/>
+    <link href="static/w3.css" rel="stylesheet"/>
+
+
+    <!--连接js-->
+    <script src="static/ProCoder.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script src="extensions/natural-sorting/bootstrap-table-natural-sorting.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="static/practice.js"></script>
+
+
+    <script src="static/pagination.js"></script>
+
+</head>
+
+
+<body onload="login(); ">
+
+<!-- loading animation start-->
+<div id="loading">
+    <section class='loader'>
+        <div class='loader-center'>
+            <div class='chars'>
+                <span class='char brace'>{</span>
+                <span class='dots'>
+                    <span class='char dot _dot-1'>.</span>
+                    <span class='char dot _dot-2'>.</span>
+                    <span class='char dot _dot-3'>.</span>
+                </span>
+                <span class='char brace'>}</span>
+            </div>
+            <img class="bi me-2" width="80" height="80" src="static/Logo3.jpg">
+        </div>
+    </section>
+</div>
+<!-- loading animation end-->
+
+<!--navigation bar start-->
+
+<div class="container-fluid sticky-top bg-white" id="nav_without_login" style="display: block">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item puff-in-center"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item puff-in-center"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item puff-in-center"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item puff-in-center"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item ms-3">
+                <button class="btn-hover color-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Login
+                </button>
+            </li>
+        </ul>
+    </header>
+    <div class="row justify-content-end position-absolute top-100 end-0">
+        <div class="collapse" id="collapseExample">
+
+            <!--SignIn-->
+            <div class="card text-center mt-3" id="signin">
+                <div class="card-body">
+                    <form id="signInForm">
+                        <div class="mb-3">
+                            <label for="SignInUsername_input" class="form-label float-start">
+                                <strong>Username</strong>
+                            </label>
+                            <input type="text" class="form-control" id="SignInUsername_input">
+                        </div>
+                        <div class="mb-3">
+                            <label for="SignInPassword_input" class="form-label float-start">
+                                <strong>Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="SignInPassword_input">
+                        </div>
+                        <div id="LoginHelp" class="form-text"></div>
+
+                        <input type="button" class="btn btn-outline-success" value="Login" onclick="signIn()"></input>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Do not have an account? <a href="#" id="signin_link" onclick="close_sign_in()">sign up</a>
+                </div>
+            </div>
+
+
+            <!--SignUp-->
+            <div class="card text-center mt-3" id="signup" style="display: none">
+                <div class="card-body">
+                    <form id="signUpForm">
+                        <div class="mb-3">
+                            <label for="username_input" class="form-label float-start">
+                                <strong>Username</strong>
+                            </label>
+                            <input type="text" class="form-control" id="username_input">
+                            <div class="form-text " id="UsernameHelp"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_input" class="form-label float-start">
+                                <strong>Email address</strong>
+                            </label>
+                            <input type="email" class="form-control" id="email_input" aria-describedby="emailHelp">
+                            <div class="form-text" id="EmailHelp">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput1" class="form-label float-start">
+                                <strong>Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput1">
+                            <div class="form-text" id="passwordHelp">Please enter a password between 6 and 12 characters.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput2" class="form-label float-start">
+                                <strong>Confirm Password</strong>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput2">
+                            <div class="form-text " id="confirmHelp"> </div>
+                        </div>
+                        <input type="button" class="btn btn-outline-success" onclick="signUp()" value="Sign Up">
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Having an account? <a href="#" onclick="close_sign_up()">sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sticky-top bg-white" id="nav_with_login" style="display: none">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a  class="nav-link"><span id="userPhoto"></span><span class="nav-item" id="LoginUsername"></span></a>
+                    <div class="dropdown-menu" style="min-width: unset">
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" href="userHomepage.html">Profile</a>
+                        <a class="dropdown-item;text-muted Pro" style="position:relative; padding: 5px 5px 5px 5px;text-decoration: none" onclick="LogOut()">LogOut</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--navigation bar end-->
+
+<div class="container">
+    <div id="explore">
+        <h1 class="font-weight-bold text-center">
+            <span class="Pro">Explore</span>
+            <span class="Code">Some</span>
+            <span class="r">Questions!</span>
+        </h1>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <!-- bar toggler start-->
+            <nav class="navbar navbar-light">
+                <button class="btn btn-warning navbar-toggler toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample" aria-label="Toggle navigation" onclick="openDiscussion()">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+            <!-- bar toggler start-->
+        </div>
+        <div class="col-sm-8 pull-right">
+            <div class="row justify-content-end">
+                <div class="col-lg-8 col-sm-4"></div>
+                <div class="col-lg-2 col-sm-4"></div>
+                <div class="col-lg-2 col-sm-4">
+                    <button type="button" class="btn btn-outline-secondary fromTop" onclick="switchTimeButton(); sortTableByTime()" id="switchTimeButton">
+                        Sort by Time
+                        <div id="switchTime">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-up" viewBox="0 0 16 16">
+                                <path d="M3.5 12.5a.5.5 0 0 1-1 0V3.707L1.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 3.707V12.5zm3.5-9a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"></path>
+                            </svg>
+                        </div>
+                        <span class="visually-hidden">Button</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 open" id="leftBar">
+            <div class="collapse collapse-horizontal show" id="collapseWidthExample">
+                <div class="container-fluid">
+
+                    <div class="search">
+
+
+                        <!--Search bar start-->
+                        <div class="position-static">
+                            <form>
+                                <div class="input-group w-100 position-relative">
+                                    <button type="button" class="btn btn-success">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                                        </svg>
+                                    </button>
+                                    <input aria-describedby="basic-addon1" aria-label="Input group" class="form-control" placeholder="Search..." type="text" id="searchInput">
+                                </div>
+                            </form>
+                        </div>
+                        <!--Search bar end-->
+
+                        <br>
+
+                        <!--Tag search start-->
+                        <h3 class="Pro titles">Search by Tags:</h3>
+                        <!--Tag search result start-->
+                        <div class="row">
+                            <div id="tagResult"></div>
+                        </div>
+                        <!--Tag search result end-->
+
+                        <br>
+
+                        <div class="row">
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInLeft" data-wow-duration="0.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Easy" autocomplete="off" onclick="pressTag('Easy')">
+                                <label class="btn btn-outline-success" for="Easy">
+                                    Easy
+                                </label><br>
+                            </div>
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInLeft" data-wow-duration="1s">
+                                <input class="btn-check" type="checkbox" value="" id="Medium" autocomplete="off" onclick="pressTag('Medium')">
+                                <label class="btn btn-outline-warning" for="Medium">
+                                    Medium
+                                </label><br>
+                            </div>
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInLeft" data-wow-duration="1.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Hard" autocomplete="off" onclick="pressTag('Hard')">
+                                <label class="btn btn-outline-danger" for="Hard">
+                                    Hard
+                                </label><br>
+                            </div>
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInLeft" data-wow-duration="0.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Python" autocomplete="off" onclick="pressTag('Python')">
+                                <label class="btn btn-outline-primary" for="Python">
+                                    Python
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInLeft" data-wow-duration="1s">
+                                <input class="btn-check" type="checkbox" value="" id="Java" autocomplete="off" onclick="pressTag('Java')">
+                                <label class="btn btn-outline-secondary" for="Java">
+                                    Java
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInLeft" data-wow-duration="1.5s">
+                                <input class="btn-check" type="checkbox" value="" id="C" autocomplete="off" onclick="pressTag('C')">
+                                <label class="btn btn-outline-success" for="C">
+                                    C
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInRight" data-wow-duration="0.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Algorithm" autocomplete="off" onclick="pressTag('Algorithm')">
+                                <label class="btn btn-outline-warning" for="Algorithm">
+                                    Algorithm
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInRight" data-wow-duration="1s">
+                                <input class="btn-check" type="checkbox" value="" id="Array" autocomplete="off" onclick="pressTag('Array')">
+                                <label class="btn btn-outline-danger" for="Array">
+                                    Array
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInRight" data-wow-duration="1.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Sorting" autocomplete="off" onclick="pressTag('Sorting')">
+                                <label class="btn btn-outline-info" for="Sorting">
+                                    Sorting
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInRight" data-wow-duration="0.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Math" autocomplete="off" onclick="pressTag('Math')">
+                                <label class="btn btn-outline-primary" for="Math">
+                                    Math
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInRight" data-wow-duration="1s">
+                                <input class="btn-check" type="checkbox" value="" id="Counting" autocomplete="off" onclick="pressTag('Counting')">
+                                <label class="btn btn-outline-secondary" for="Counting">
+                                    Counting
+                                </label><br>
+                            </div>
+
+                            <div class="d-grid col-xl-4 col-lg-6 wow fadeInRight" data-wow-duration="1.5s">
+                                <input class="btn-check" type="checkbox" value="" id="Tree" autocomplete="off" onclick="pressTag('Tree')">
+                                <label class="btn btn-outline-success" for="Tree">
+                                    Tree
+                                </label><br>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Tag search end-->
+                </div>
+            </div>
+        </div>
+
+        <!-- Search result table start-->
+        <div class="col-8" id="userComments">
+            <div class="row">
+                <div class="container">
+                    <table class="table table-responsive table-hover searchable sortable" id="commentTable">
+                        <thead>
+                        <th style="width: 55%">Content</th>
+                        <th style="width: 25%">Tags</th>
+                        <th style="width: 1%"> </th>
+                        <th style="width: 19%">Post Time</th>
+                        </thead>
+                        <tbody class="" id="resultTable"></tbody>
+
+
+                        <div id="info"></div>
+                    </table>
+
+                    <div id="page" class="pagination"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search result table start-->
+
+    </div>
+</div>
+<br><br>
+</body>
+
+<script>
+    var colors_dict = {'Easy':'success', 'Medium':'warning', 'Hard':'danger', 'Python':'primary', 'Java':'secondary', 'C':'success', 'Algorithm':'warning', 'Array':'danger', 'Sorting':'info', 'Math':'primary', 'Counting':'secondary', 'Tree':'success'};
+
+    $(function () {
+        dropdownOpen();
+    });
+
+    function dropdownOpen(){
+        $('.dropdown').mouseover(function(){
+            $(this).addClass('show');
+            $(this).find(".dropdown-menu").addClass('show');
+
+        }).mouseout(function(){
+            $(this).find(".dropdown-menu").removeClass('show');
+            $(this).removeClass('show');
+        });
+    }
+    //loading animation
+    document.onreadystatechange = function(){
+        if(document.readyState == "complete"){
+            $("#loading").fadeOut(3000);
+            $('#page').fadeIn();
+        }
+    };
+
+    //search by text
+    $(document).ready(function(){
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+
+            if(value == ""){
+                SetAllQuestions();
+            }
+            var questionSearch = [];
+            fetch("http://192.168.31.77:5050/question/GetAllQuestions")
+                .then((response) => response.json())
+                .then((data) => {
+                    data.forEach(d => {
+                        if (d.questionID > 0) {
+                            let html_str = ""
+                            var content = d.description;
+                            var title = d.questionTitle;
+                            var postDate = d.postDate.split('T')[0];
+                            var tags = d.tags.split(',');
+                            var id = d.questionID;
+                            var tagHtml = "";
+                            tags.forEach(element => {
+                                tagHtml += '<span class="badge rounded-pill bg-' + colors_dict[element] + ' me-1">' + element + ' </span>';
+                            });
+
+                            if ((title + content + tags.toString().replaceAll(',', ' ')).toLowerCase().includes(value)){
+                                html_str +=
+                                    `<tr class="bg-blue" data-bs-toggle="modal" data-bs-target="#staticBackdrop${id}"}>
+                                        <td><strong>${title}:</strong>${content.replaceAll('<br>', "")}</td>
+                                        \t\n\t\n
+                                        <td>${tagHtml}</td>
+                                        \t\n\t\n
+                                        <td></td>
+                                        <td>${postDate}</td>
+                                    </tr>`;
+                                questionSearch.push(html_str);
+                            }
+                        }
+                    })
+                    $('#page').pagination({
+                        dataSource: questionSearch,
+                        pageSize: 5,
+                        prevText: 'Previous',
+                        nextText: 'Next',
+                        autoHideNext: true,
+                        autoHidePrevious: true,
+                        className: 'paginationjs-theme-blue paginationjs-big',
+                        callback: function(data, pagination) {
+                            // template method of yourself
+                            $('#resultTable').html(data);
+                        }
+                    })
+                });
+        });
+    });
+    //search by tag
+    $(document).ready(function(){
+        $("#tagResult").on('DOMSubtreeModified', function() {
+            var value = $(this).text().split(" ");
+            if(value.length == 0){
+                SetAllQuestions();
+            }
+            var questionSearch = [];
+            fetch("http://192.168.31.77:5050/question/GetAllQuestions")
+                .then((response) => response.json())
+                .then((data) => {
+                    data.forEach(d => {
+                        if (d.questionID > 0) {
+                            let html_str = ""
+                            var content = d.description;
+                            var title = d.questionTitle;
+                            var postDate = d.postDate.split('T')[0];
+                            var tags = d.tags.split(',');
+                            var id = d.questionID;
+                            var tagHtml = "";
+                            tags.forEach(element => {
+                                tagHtml += '<span class="badge rounded-pill bg-' + colors_dict[element] + ' me-1">' + element + ' </span>';
+                            });
+                            var hasTag = true;
+                            for (var i=0; i < value.length; i++){
+                                if (value[i] != "" && !tags.includes(value[i])){
+                                    hasTag = false;
+                                }
+                            }
+                            if (hasTag){
+                                html_str +=
+                                    `<tr class="bg-blue" data-bs-toggle="modal" data-bs-target="#staticBackdrop${id}"}>
+                                        <td><strong>${title}:</strong>${content.replaceAll('<br>', "")}</td>
+                                        \t\n\t\n
+                                        <td>${tagHtml}</td>
+                                        \t\n\t\n
+                                        <td></td>
+                                        <td>${postDate}</td>
+                                    </tr>`;
+                                questionSearch.push(html_str);
+                            }
+                        }
+                    })
+                    $('#page').pagination({
+                        dataSource: questionSearch,
+                        pageSize: 5,
+                        prevText: 'Previous',
+                        nextText: 'Next',
+                        autoHideNext: true,
+                        autoHidePrevious: true,
+                        className: 'paginationjs-theme-blue paginationjs-big',
+                        callback: function(data, pagination) {
+                            // template method of yourself
+                            $('#resultTable').html(data);
+                        }
+                    })
+                });
+        });
+    });
+    function LogOut(){
+        if (localStorage.getItem("username") != null && localStorage.getItem("password") != null){
+            document.getElementById("nav_without_login").style.display = "block";
+            document.getElementById("nav_with_login").style.display = "none";
+            localStorage.removeItem('username')
+            localStorage.removeItem('password')
+        }
+    }
+
+    let questions = []
+    function SetAllQuestions(){
+        questions = [];
+        fetch("http://192.168.31.77:5050/question/GetAllQuestions")
+            .then((response) => response.json())
+            .then((data) => {
+                data.forEach(d => {
+                    if (d.questionID > 0) {
+                        let html_str = ""
+                        var content = d.description;
+                        var title = d.questionTitle;
+                        var postDate = d.postDate.split('T')[0];
+                        var tags = d.tags.split(',');
+                        var id = d.questionID;
+                        var tagHtml = "";
+                        tags.forEach(element => {
+                            tagHtml += '<span class="badge rounded-pill bg-' + colors_dict[element] + ' me-1">' + element + ' </span>';
+                        });
+                        html_str +=
+                            `<tr class="bg-blue" data-bs-toggle="modal" data-bs-target="#staticBackdrop${id}"}>
+                            <td><strong>${title}:</strong>${content.replaceAll('<br>', "")}</td>
+                            \t\n\t\n
+                            <td>${tagHtml}</td>
+                            \t\n\t\n
+                            <td></td>
+                            <td>${postDate}</td>
+                        </tr>`;
+
+                        document.getElementById("info").innerHTML +=
+                            `<div class="modal fade" id="staticBackdrop${id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content" style="background-color: transparent; border: none">
+                                    <div class="modal-body" style="overflow-x: hidden; overflow-y:hidden">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="card border-warning">
+                                                    <div class="card-body">
+                                                        <div class="row justify-content-end">
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="collapse show" id="description">
+                                                            <h5 class="card-title"><strong>Question Title:</strong>${title}</h5><br>
+                                                            <p class="card-text"><strong>Question Description:</strong><p>${content}</p>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <a href="question.html?questionID=${id}" class="btn btn-outline-success">View Question</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+
+                        questions.push(html_str);
+                    }
+                })
+                $('#page').pagination({
+                    dataSource: questions,
+                    pageSize: 5,
+                    prevText: 'Previous',
+                    nextText: 'Next',
+                    autoHideNext: true,
+                    autoHidePrevious: true,
+                    className: 'paginationjs-theme-blue paginationjs-big',
+                    callback: function(data, pagination) {
+                        // template method of yourself
+                        $('#resultTable').html(data);
+                    }
+                })
+            });
+    }
+    SetAllQuestions();
+</script>
+
+
+
+<footer class="w3-bottom w3-center">
+    <b>ProCoder</b> by Team 9
+</footer>
+</html>
+
+

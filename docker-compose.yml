@@ -1,0 +1,32 @@
+version: '3.8'
+
+# 端口管理工具服务 (Portainer)
+services:
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /opt/docker/portainer:/data
+
+
+  # Portfolio 应用
+  #  portfolio:
+  #    container_name: portfolio-container
+  #    image: jinhuafan/portfolio:latest
+  #    ports:
+  #      - "80:80"
+  #    restart: unless-stopped
+
+  portfolio:
+    build:
+      context: ./portfolio
+      dockerfile: Dockerfile
+    container_name: portfolio
+    ports:
+      - "80:80"
+    restart: unless-stopped

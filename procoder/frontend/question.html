@@ -1,0 +1,490 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ProCoder</title>
+    <link rel="icon" type="image/png" href="static/Logo3.jpg">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+
+
+    <!--连接Css-->
+    <link rel="stylesheet" href="static/ProCoder.css" />
+    <link rel="stylesheet" href="static/w3.css" />
+
+
+    <!--连接js-->
+    <script src="static/jquery-3.6.1.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+    <script defer src="static/ProCoder.js"></script>
+    <script defer src="static/question.js"></script>
+
+    <script src="static/pagination.js"></script>
+
+
+    <!--连接ace-->
+    <script src="ace/src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ace/src/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+        //loading animation
+        document.onreadystatechange = function(){
+            if(document.readyState == "complete"){
+                $("#loading").fadeOut(3000);
+                $('#page').fadeIn();
+            }
+        };
+
+    </script>
+
+
+    <style>
+        #code {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+
+</head>
+
+
+<body onload="login()">
+<!-- loading animation start-->
+<div id="loading">
+    <section class='loader'>
+        <div class='loader-center'>
+            <div class='chars'>
+                <span class='char brace'>{</span>
+                <span class='dots'>
+                            <span class='char dot _dot-1'>.</span>
+                            <span class='char dot _dot-2'>.</span>
+                            <span class='char dot _dot-3'>.</span>
+                        </span>
+                <span class='char brace'>}</span>
+            </div>
+            <img class="bi me-2" width="80" height="80" src="static/Logo3.jpg">
+        </div>
+    </section>
+</div>
+<!-- loading animation end-->
+
+<!--navigation bar start-->
+<div class="container-fluid sticky-top bg-white" id="nav_without_login" style="display: block">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item puff-in-center"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item puff-in-center"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item puff-in-center"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item puff-in-center"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item ms-3">
+                <button class="btn-hover color-1" type="button" data-bs-toggle="ModalForm" data-bs-target="#ModalForm" aria-expanded="false" aria-controls="ModalForm" onclick="CheckLogin()">
+                    Login
+                </button>
+            </li>
+        </ul>
+    </header>
+</div>
+
+<div class="container-fluid sticky-top bg-white" id="nav_with_login" style="display: none">
+    <header class="d-flex  py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex mb-3 mb-md-0 me-md-auto text-dark text-decoration-none animated bounceInLeft">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <span class="fs-4 Pro">Pro</span>
+            <span class="fs-4 Code">Code</span>
+            <span class="fs-4 r">r</span>
+        </a>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="practice.html" class="nav-link">Practice</a></li>
+            <li class="nav-item"><a href="post.html" class="nav-link">Post</a></li>
+            <li class="nav-item"><a href="discuss.html" class="nav-link">Community</a></li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <a  class="nav-link"><span id="userPhoto"></span><span class="nav-item"  id="LoginUsernameQ"></span></a>
+
+                    <div class="dropdown-menu" style="min-width: unset">
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" href="userHomepage.html">Profile</a>
+                        <a class="dropdown-item;text-muted Pro" style="position: relative; padding: 5px 5px 5px 5px;text-decoration: none" onclick="LogOut()">LogOut</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </header>
+</div>
+<!--navigation bar end-->
+<div class="modal" id="ModalForm" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="loginForm">
+            <form action="">
+                <div class="modal-header">
+                    <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+                    <h5 class="modal-title fs-4 Pro">User Login Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="CloseUp()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="Username">Username<span class="text-danger">*</span></label>
+                        <input type="text" name="username" class="form-control" id="Username" placeholder="Enter Username">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Password">Password<span class="text-danger">*</span></label>
+                        <input type="password" name="password" class="form-control" id="Password" placeholder="Enter Password">
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="remember" required>
+                        <label class="form-check-label" for="remember">Remember Me</label>
+
+                    </div>
+                    <div class="mb-1">
+                        <button type="button" class="btn btn-success mx-auto w-100" onclick="UserLogin()">Login</button>
+                    </div>
+                </div>
+                <div class="justify-content-center text-muted modal-footer">
+                    Do not have an account? <a href="#" id="signin_link" onclick="close_sign_in()">sign up</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-content" id="signUp" style="display: none">
+            <form action="">
+                <div class="modal-header">
+                    <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+                    <h5 class="modal-title fs-4 Code">User Sign Up Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="CloseUp()"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signUpForm">
+                        <div class="mb-3">
+                            <label for="username_input" class="form-label float-start">
+                                <strong>Username</strong><span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="username_input">
+                            <div class="form-text " id="UsernameHelp"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_input" class="form-label float-start">
+                                <strong>Email address</strong><span class="text-danger">*</span>
+                            </label>
+                            <input type="email" class="form-control" id="email_input" aria-describedby="emailHelp">
+                            <div class="form-text " id="EmailHelp">We'll never share your email with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput1" class="form-label float-start">
+                                <strong>Password</strong><span class="text-danger">*</span>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput1">
+                            <div class="form-text" id="passwordHelp">Please enter a password between 6 and 12 characters.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordInput2" class="form-label float-start">
+                                <strong>Confirm Password</strong><span class="text-danger">*</span>
+                            </label>
+                            <input type="password" class="form-control" id="passwordInput2">
+                            <div class="form-text " id="confirmHelp"> </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck2">
+                            <label class="form-check-label float-start" for="remember">Check</label>
+                        </div>
+                        <input type="button" class="btn btn-outline-success" onclick="signUp()" value="Sign Up">
+                    </form>
+                </div>
+                <div class="justify-content-center text-muted modal-footer">
+                    Having an account? <a href="#" onclick="close_sign_up()">sign in</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--notices start-->
+<div id="ansSuccess" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #F1F8E9">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Congratulations! You passed all test cases!
+    </div>
+</div>
+
+<div id="postSuccess" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #F1F8E9">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        You've posted your comment successfully!
+    </div>
+</div>
+
+<div id="dislikeSuccess" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FFFDE7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        You've disliked the comment.
+    </div>
+</div>
+
+<div id="emptyComment" class="toast fade hiding hide" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="toast-header" style="background-color: #FBE9E7">
+        <div class="col-11">
+            <img class="bi me-2" width="40" height="40" src="static/Logo3.jpg">
+            <strong class="mr-auto">ProCoder Notice</strong>
+        </div>
+        <div class="col-1">
+            <button type="button" class="ml-2 mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="toast-body">
+        Invalid followup comment.
+    </div>
+</div>
+<!--notices end-->
+
+<div class="container-fluid bg-light">
+    <div class="row ms-3">
+        <div class="col" id="UserOpt">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link me-2 " aria-current="page" href="#" onclick="open_question_des()">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link me-2" href="#" onclick="open_discuss()">Discuss</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#" onclick="open_sub_his()">Submit history</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col">
+            <nav class="navbar" id="CodeNav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-primary" id="language"></button>
+                    </li>
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+    <div class="row" style="height: 660px">
+
+        <!-- Description-->
+        <div class="col ms-3 me-2 mb-3 bg-white" style="overflow-y: scroll; overflow-x: hidden; max-height: 80vh" id="questionDes">
+            <h2 id="quesTitle">Question description</h2>
+            <div class="container" id="QuesType">
+                <button type="button" class="btn btn-primary" id="difficulty" hidden></button>
+                <button type="button" class="btn btn-primary" id="otherTag" hidden></button>
+            </div>
+            <hr style="border: 1px solid; padding: 0 15%" />
+            <div class="row mb-1"><h4 style="margin: 0 3% ">Write a function named: <code class="bg-light rounded-3 example" style=" font-size: 16px" id="funcDes">functionName(parameter1, ...)</code></h4></div>
+            <h4 style="margin: 0 3% " id="quesDes">
+
+            </h4>
+            <br><br>
+            <div>
+                <div id="testcase">
+                </div><br>
+            </div>
+
+
+            <br><br>
+
+        </div>
+
+
+
+        <!-- Discuss-->
+        <div class="col ms-3 me-2 mb-3 bg-white" id="discuss" style="display: none; overflow-y: scroll; overflow-x: hidden">
+            <h2>Discussions</h2>
+            <hr style="border: 1px solid; padding: 0 15%" />
+
+            <div id="comments">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4" id="postUser"><img src="Photo/1.png" alt="avatar" class="rounded-circle img-fluid img-responsive" width="40">
+                    <input type="text" class="form-control mr-3 ms-1" placeholder="Leave a comment here..." id="notLoginPost">
+                    <button class="btn btn-primary ms-1" type="button" onclick="CheckLogin()">Post</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--submit history-->
+        <div class="col ms-3 me-2 mb-3 bg-white" id="submitHis" style="display: none;overflow-y: scroll; overflow-x: hidden; max-height: 80vh">
+            <table class="table table-sm table-striped" style="">
+                <thead>
+                <tr>
+                    <th scope="col">RESULT</th>
+                    <th scope="col">TIME</th>
+                    <th scope="col">CHECK CODE</th>
+                </tr>
+                <tbody id="subBody">
+                </tbody>
+            </table>
+            <div id="pageNo" class="pagination"></div>
+        </div>
+
+
+<!--        right side-->
+        <div class="col me-3 ms-2 mb-3" style="background-color: #F6FFFF; overflow-y: scroll; overflow-x: hidden" id="CodeContent">
+            <div class="row ms-2 me-2 mt-1" style="height: 50%; border: black 1px">
+                <div class="border rounded">
+                    <div class="" id="code" style="height: 100%; width: 100%"></div>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn-hover color-9 mb-3 mt-3 ms-2"  id="postCode">submit</button>
+                <div class="me-5 ms-5" id="runRes" style="width: 90%"></div>
+            </div>
+            <div class="row">
+                <div class="container" style="width: 98%">
+                    <table class="table-striped table-bordered" id="testResult" style="background-color: white; width: 100%" hidden>
+                        <thead class="thead-light">
+                        <tr>
+                            <th style="width: 45%">Test cases</th>
+                            <th style="width: 25%">Expected</th>
+                            <th style="width: 25%">Got</th>
+                            <th style="width: 5%"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="test-result">
+
+                        </tbody>
+                    </table>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.staticfile.org/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
+        <script>
+            function setMonaco(mode){
+                $.ajax({
+                    url: "http://http://192.168.31.77/:5050/question/GetQuesByQuesID/" + window.location.href.split("questionID")[1].slice(1),
+                    dataType: "json",
+                    type: 'get',
+                    headers: {
+                        Accept: "application/json; charset=utf-8"
+                    },
+                    success: function (resp) {
+                        let value = ""
+                        if (resp.tags.split(",")[0] === "Python"){
+                            value = "def function():"
+                        }
+                        else if (resp.tags.split(",")[0] === "Java"){
+                            value = "Java"
+                        }
+                        else if (resp.tags.split(",")[0] === "C"){
+                            value = "#include <stdio.h>\n" +
+                                "int main() {\n" +
+                                "    printf(\"Hello World!\");\n" +
+                                "}"
+                        }
+                        require.config({ paths: { 'vs': 'http://cdn.staticfile.org/monaco-editor/0.34.0/min/vs' }});
+                        // 将monaco变量赋值为全局变量
+                        require(['vs/editor/editor.main'], function() {
+                            var editor = window.monaco.editor.create(document.getElementById('code'), {
+                                value: value,
+                                language: resp.tags.split(",")[0].toLowerCase(),
+                                lineNumbers: 'off',
+                                roundedSelection: true,
+                                scrollBeyondLastLine: false,
+                                readOnly: false,
+                                fixedOverflowWidgets: true,
+                                theme: mode,
+                                fontSize:"20px",
+                                automaticLayout: true,
+                                cursorBlinking: 'Solid',
+                            });
+                            setTimeout(function () {
+                                editor.updateOptions({
+                                    lineNumbers: 'on'
+                                });
+                            }, 2000);
+
+                        });
+                    }
+                })
+            }
+            setMonaco("")
+            // setMonaco("vs-dark")
+
+
+
+        </script>
+
+    </div>
+</div>
+
+</div>
+
+
+</body>
+
+<script>
+    $(function () {
+        dropdownOpen();
+
+    });
+
+    function dropdownOpen(){
+        $('.dropdown').mouseover(function(){
+            $(this).addClass('show');
+            $(this).find(".dropdown-menu").addClass('show');
+
+        }).mouseout(function(){
+            $(this).find(".dropdown-menu").removeClass('show');
+            $(this).removeClass('show');
+        });
+    }
+
+    function LogOut(){
+        if (localStorage.getItem("username") != null && localStorage.getItem("password") != null){
+            document.getElementById("nav_without_login").style.display = "block";
+            document.getElementById("nav_with_login").style.display = "none";
+            document.getElementById("Username").value = "";
+            document.getElementById("Password").value = "";
+
+            localStorage.removeItem('username')
+            localStorage.removeItem('password')
+        }
+    }
+</script>
+
+<footer class="w3-bottom w3-center">
+    <b>ProCoder</b> by Team 9
+</footer>
+</html>
